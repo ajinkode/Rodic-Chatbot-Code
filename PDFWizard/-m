@@ -1,0 +1,8 @@
+Collecting mysql-connector-python
+  Downloading mysql_connector_python-8.0.33-cp311-cp311-win_amd64.whl (9.6 MB)
+     ---------------------------------------- 9.6/9.6 MB 11.6 MB/s eta 0:00:00
+Collecting protobuf<=3.20.3,>=3.11.0 (from mysql-connector-python)
+  Downloading protobuf-3.20.3-py2.py3-none-any.whl (162 kB)
+     -------------------------------------- 162.1/162.1 kB 9.5 MB/s eta 0:00:00
+Installing collected packages: protobuf, mysql-connector-python
+Successfully installed mysql-connector-python-8.0.33 protobuf-3.20.3
