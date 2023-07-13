@@ -1,0 +1,311 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <link rel="icon" href="{%static 'images/hello.jpg'%}">
+    <style>
+        *{
+            list-style: none;
+            text-decoration: none;
+        }
+        body{
+            background-color:rgb(255, 255, 255);
+        }
+        .page{
+            display: flex;
+            background-color:rgb(255, 255, 255);
+            height: 743px;
+            /* height: 100%; */
+        }
+        .page .sidebar{
+            left: 9px;
+            top: 10px;
+            width: 25%;
+            height: 720px;
+            border: 3px solid rgb(34, 33, 33);
+            position: relative;
+            align-items: center;
+            border-radius: 10px;
+            background-color:rgb(16, 15, 15);
+        }
+        .page .sidebar header{
+            font-size: large;
+            text-align: center;
+            align-items: center;
+            background-color: #3b3c3d;
+            margin: 30px 10px;
+            color:white;
+            border: 1cm;
+        }
+        .page .sidebar ul{
+            padding: 10px 10px;
+            align-items: center;
+            text-align: center;
+            margin: 10px 10px;
+        }
+        .page .sidebar ul li{
+            align-self: center;
+            background-color: #3b3c3d;
+            text-align: center;
+            border-radius: 15px;
+            margin: 20px 10px;
+            border-bottom: 1 px solid white;
+        }
+        .page .sidebar ul li p{
+            color: rgb(247, 247, 247);
+        }
+        .page .sidebar ul li a{
+            background-color: aliceblue;
+            color: rgb(247, 253, 253);
+            border-radius: 10px;
+        }
+        /* .page .sidebar ul li a:hover{
+            color: rgb(0, 65, 122);
+            background-color: azure;
+        } */
+        .page .right{
+            width: 75%;
+        }
+
+        .page .right .main{
+            overflow: auto;
+            top: 1%;
+            left: 3%;
+            width: 95%;
+            height: 86%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            align-items: stretch;
+            margin-bottom: 20px;
+            background-color: antiquewhite;
+        }
+        .page .right .lottie{
+            width: 250px;
+            height: 250px;
+            align-self: center;
+            opacity: 1;
+        } 
+        .page .right .main .chat{
+            padding: 3px 10px;
+        }
+        ::-webkit-scrollbar {
+                width: 3px;
+        }
+        ::-webkit-scrollbar :hover{
+                width: 20px;
+        }
+
+        /* ::-webkit-scrollbar-track {
+                box-shadow: inset 0 0 5px rgba(107, 104, 104, 0.581);
+                border-radius: 10px;
+        } */
+
+        ::-webkit-scrollbar-thumb {
+                background: rgb(51, 48, 48);
+                border-radius: 10px;
+        }
+        
+        .page .right .main .chat ul{
+            padding: 5px 5px;
+        }
+        .sent .message-text{
+            padding-left: 100px;
+            padding-right: 10px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            align-items: stretch;
+            margin: 5px;
+        }
+        .sent .box{
+            padding: 5px 8px;
+            width: fit-content;
+            align-self: flex-end;
+            background-color: rgb(37, 169, 85);
+            border-radius: 15px;
+        }
+        .sent .message-sender{
+            text-align: left;
+            border: 0.5px #097d1bbb;
+        }
+        .sent .message-content{
+            text-align: left;
+            color: rgb(255, 255, 255);
+        }
+        .waiting{
+            position:fixed;
+            padding: 5px 8px;
+            right: 480px;
+            bottom: 95px;
+            border-radius: 5px;
+            background-color: #52525279;
+            /* flex-direction: column; */
+            /* align-items: stretch; */
+            /* opacity: 0.5; */
+        }
+        .waiting .message-content{
+            text-align: center;
+            color: white;
+        }
+        .received{
+            margin: 5px;
+            padding-left: 10px;
+            padding-right: 50px;
+        }
+        .received .box{
+            padding: 5px 8px;
+            width: fit-content;
+            align-self: flex-end;
+            background-color: rgb(92, 90, 85);
+            border-radius: 15px;
+        }
+        .received .message-sender{
+            text-align: left;
+        }
+        .received .message-content{
+            text-align: left;
+            color: white;
+        }
+        .page .right .search{
+            margin-left: 9px;
+            display: flex;
+            top: 2%;
+            padding: 5px 15px;
+            /* padding-right: 15px; */
+            width: 95%;
+            /* width: 1100px; */
+            color: rgb(233, 240, 240);
+        }
+        .page .right .search .typing-area {
+            box-shadow: #3b3c3d;
+            margin-left: 40px;
+            flex: 1;
+            border-radius: 25px;
+            padding: 0px 10px;
+        }
+        .page .right .search .typing-area #query{
+            border-radius: 25px;
+            padding: 0px 16px;
+            padding-top: 11px;
+            font-family:Georgia, 'Times New Roman', Times, serif;
+            font-size: medium;
+            width: 96.1%;
+            resize: none;
+            height: auto;
+            margin: 5px;
+            color: rgb(0, 0, 0);
+            border: 1px solid rgb(1, 1, 1);
+            box-shadow: 2px 8px 12px #525252;
+        }
+        .search .submit-button{
+            background-color: white;
+            border: 0;
+            margin: 0;
+            padding: 0px 0px;
+        }
+        .search .submit-button:hover{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="sidebar">
+            <header><p><b>Rodic CHATBOT</b></p></header>
+        </div>
+        <div class="right">
+            <div class="main">
+                <div class="lottie">
+                    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+                    <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_ofa3xwo7.json" Hover="checked" background="transparent"  speed="1"  loop autoplay></lottie-player>
+                </div>
+                <div class="chat">
+                    <ul class="msg-list" id="mylist">
+
+                    </ul>
+                </div>
+            </div>
+            <form class="search">
+                {%csrf_token%}
+                <div class="typing-area">
+                    <textarea name="input" class="msg-input" id="query" placeholder="Ask the bot"></textarea>
+                </div>
+                <button class="submit-button" type="submit"><img src="{%static 'images/submit4.jpg'%}" alt="img"></button>
+            </form>
+        </div>
+    </div>
+    <script>
+        const messagelist=document.querySelector('.msg-list')
+        const chat=document.querySelector('.chat')
+        const messageform=document.querySelector('.search')
+        const messageinput= document.querySelector('.msg-input')
+        messageform.addEventListener('submit',function() {
+            event.preventDefault()
+            const message=messageinput.value.trim()
+            if(message.length===0) return;
+            messageinput.value='';
+
+            const messageItem=document.createElement('li')
+            messageItem.classList.add('message', 'sent');
+            messageItem.innerHTML = `
+                <div class="message-text">
+                    <div class="box">
+                        <div class="message-sender">
+                            <b>You:</b>
+                        </div>
+                        <div class="message-content">
+                            ${message}
+                        </div>
+                    </div>
+                </div>`;
+            messagelist.appendChild(messageItem);
+
+            const waitmsg = document.createElement('li');
+            waitmsg.classList.add('message', 'waiting');
+            waitmsg.innerHTML = `
+            <div class="box">
+                <div class="message-content">
+                    <b>Generating response.......</b>
+                </div>
+            </div>
+            `;
+            chat.appendChild(waitmsg);
+
+            fetch('', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({
+                'csrfmiddlewaretoken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                'message': message
+            })
+            })
+            .then(response => response.json())
+            .then(data => {
+                var parent = waitmsg.parentNode;
+                parent.removeChild(waitmsg);
+
+                const response = data.response;
+                const messageItem = document.createElement('li');
+                messageItem.classList.add('message', 'received');
+                messageItem.innerHTML = `
+                <div class="message-text">
+                    <div class="box">
+                        <div class="message-sender">
+                            <b>Bot:</b>
+                        </div>
+                        <div class="message-content">
+                            ${response}
+                        </div>
+                    </div>
+                </div>
+                `;
+                messagelist.appendChild(messageItem);
+            });
+        });
+    </script>
+</body>
