@@ -6,14 +6,14 @@ from langchain.agents.agent_toolkits import SQLDatabaseToolkit
 from langchain.sql_database import SQLDatabase
 from langchain.llms.openai import OpenAI
 
-user="root"
-password="mysqlbv22"
-host="localhost"
-name="learning"
+user="YOUR_USER_NAME"
+password="YOUR_MYSQL_PASSWORD"
+host="HOST_NAME"
+name="DATABASE_NAME"
 
 db=SQLDatabase.from_uri(f"mysql+pymysql://{user}:{password}@{host}/{name}")
 
-llm=OpenAI(temperature=0,openai_api_key="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")
+llm=OpenAI(temperature=0,openai_api_key="YOUR_OPENAI_API_KEY")
 toolkit=SQLDatabaseToolkit(db=db,llm=llm)
 
 agent=create_sql_agent(llm=llm,toolkit=toolkit,verbose=False)
