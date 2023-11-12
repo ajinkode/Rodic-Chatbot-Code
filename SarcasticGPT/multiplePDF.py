@@ -68,8 +68,6 @@ def handle_userinput(user_question):
 
 def main():
     
-    # os.environ['OPENAI_API_KEY']="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"
-    # os.environ['HUGGINGFACEHUB_API_TOKEN'] = "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"
     
     st.set_page_config(page_title="Chat with multiple PDFs",
                        page_icon=":books:")
